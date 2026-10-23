@@ -1,0 +1,452 @@
+<div class="signup-page">
+
+  <!-- Decorative background elements -->
+  <div class="background-circle circle-one"></div>
+  <div class="background-circle circle-two"></div>
+
+  <div class="signup-container">
+
+    <!-- Left branding section -->
+    <section class="branding-panel">
+      <div class="brand-content">
+
+        <a class="brand-logo" routerLink="/login">
+          <span class="wifi-logo">
+            <i class="bi bi-wifi"></i>
+          </span>
+
+          <span>Wi<span>Zone</span></span>
+        </a>
+
+        <div class="brand-message">
+          <span class="welcome-badge">
+            <i class="bi bi-stars"></i>
+            Smart connectivity starts here
+          </span>
+
+          <h1>
+            One account.<br />
+            <span>Unlimited possibilities.</span>
+          </h1>
+
+          <p>
+            Create your WiZone account and discover reliable WiFi plans
+            designed around your speed, location, and budget.
+          </p>
+
+          <div class="feature-list">
+            <div class="feature-item">
+              <span class="feature-icon">
+                <i class="bi bi-lightning-charge-fill"></i>
+              </span>
+
+              <div>
+                <h3>High-speed plans</h3>
+                <p>Choose connectivity that matches your requirements.</p>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <span class="feature-icon">
+                <i class="bi bi-shield-check"></i>
+              </span>
+
+              <div>
+                <h3>Secure and reliable</h3>
+                <p>Your account information stays protected.</p>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <span class="feature-icon">
+                <i class="bi bi-headset"></i>
+              </span>
+
+              <div>
+                <h3>Simple request management</h3>
+                <p>Apply for schemes and track requests in one place.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="brand-footer">
+          <i class="bi bi-broadcast-pin"></i>
+          Stay connected. Stay ahead.
+        </div>
+      </div>
+    </section>
+
+    <!-- Right signup section -->
+    <section class="form-panel">
+
+      <div class="mobile-logo">
+        <span class="wifi-logo">
+          <i class="bi bi-wifi"></i>
+        </span>
+
+        <span>Wi<span>Zone</span></span>
+      </div>
+
+      <div class="form-container">
+
+        <div class="form-heading">
+          <span class="heading-icon">
+            <i class="bi bi-person-plus-fill"></i>
+          </span>
+
+          <div>
+            <h2>Create your account</h2>
+            <p>Enter your details to get started with WiZone.</p>
+          </div>
+        </div>
+
+        <!-- API error message -->
+        <div class="api-error" *ngIf="errorMessage">
+          <i class="bi bi-exclamation-circle-fill"></i>
+          <span>{{ errorMessage }}</span>
+
+          <button
+            type="button"
+            class="close-error"
+            aria-label="Close error message"
+            (click)="errorMessage = ''">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        <form [formGroup]="signupForm" (ngSubmit)="onSignup()" novalidate>
+
+          <div class="form-grid">
+
+            <!-- Username -->
+            <div class="form-group">
+              <label for="username">
+                Username <span>*</span>
+              </label>
+
+              <div
+                class="input-container"
+                [class.input-error]="isInvalid('username')"
+                [class.input-success]="isValid('username')">
+
+                <i class="bi bi-person input-icon"></i>
+
+                <input
+                  id="username"
+                  type="text"
+                  formControlName="username"
+                  placeholder="Enter your username"
+                  autocomplete="username" />
+
+                <i
+                  class="bi bi-check-circle-fill success-icon"
+                  *ngIf="isValid('username')">
+                </i>
+              </div>
+
+              <small class="error" *ngIf="isInvalid('username')">
+                <i class="bi bi-exclamation-circle"></i>
+                Username is required
+              </small>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+              <label for="email">
+                Email address <span>*</span>
+              </label>
+
+              <div
+                class="input-container"
+                [class.input-error]="isInvalid('email')"
+                [class.input-success]="isValid('email')">
+
+                <i class="bi bi-envelope input-icon"></i>
+
+                <input
+                  id="email"
+                  type="email"
+                  formControlName="email"
+                  placeholder="name@example.com"
+                  autocomplete="email" />
+
+                <i
+                  class="bi bi-check-circle-fill success-icon"
+                  *ngIf="isValid('email')">
+                </i>
+              </div>
+
+              <small
+                class="error"
+                *ngIf="f['email'].touched && f['email'].errors?.['required']">
+                <i class="bi bi-exclamation-circle"></i>
+                Email is required
+              </small>
+
+              <small
+                class="error"
+                *ngIf="f['email'].touched && f['email'].errors?.['pattern']">
+                <i class="bi bi-exclamation-circle"></i>
+                Enter a valid email address
+              </small>
+            </div>
+
+            <!-- Mobile number -->
+            <div class="form-group">
+              <label for="mobileNumber">
+                Mobile number <span>*</span>
+              </label>
+
+              <div
+                class="input-container"
+                [class.input-error]="isInvalid('mobileNumber')"
+                [class.input-success]="isValid('mobileNumber')">
+
+                <i class="bi bi-phone input-icon"></i>
+
+                <input
+                  id="mobileNumber"
+                  type="tel"
+                  formControlName="mobileNumber"
+                  placeholder="Enter 10-digit number"
+                  maxlength="10"
+                  inputmode="numeric"
+                  autocomplete="tel" />
+
+                <i
+                  class="bi bi-check-circle-fill success-icon"
+                  *ngIf="isValid('mobileNumber')">
+                </i>
+              </div>
+
+              <small
+                class="error"
+                *ngIf="
+                  f['mobileNumber'].touched &&
+                  f['mobileNumber'].errors?.['required']
+                ">
+                <i class="bi bi-exclamation-circle"></i>
+                Mobile number is required
+              </small>
+
+              <small
+                class="error"
+                *ngIf="
+                  f['mobileNumber'].touched &&
+                  f['mobileNumber'].errors?.['pattern']
+                ">
+                <i class="bi bi-exclamation-circle"></i>
+                Mobile number must contain exactly 10 digits
+              </small>
+            </div>
+
+            <!-- Role -->
+            <div class="form-group">
+              <label for="userRole">
+                Account role <span>*</span>
+              </label>
+
+              <div
+                class="input-container select-container"
+                [class.input-error]="isInvalid('userRole')"
+                [class.input-success]="isValid('userRole')">
+
+                <i class="bi bi-people input-icon"></i>
+
+                <select
+                  id="userRole"
+                  formControlName="userRole"
+                  aria-label="Select account role">
+                  <option value="" disabled>Select your role</option>
+                  <option value="Admin">Admin</option>
+                  <option value="User">User</option>
+                </select>
+              </div>
+
+              <small class="error" *ngIf="isInvalid('userRole')">
+                <i class="bi bi-exclamation-circle"></i>
+                Role is required
+              </small>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+              <label for="password">
+                Password <span>*</span>
+              </label>
+
+              <div
+                class="input-container"
+                [class.input-error]="isInvalid('password')"
+                [class.input-success]="isValid('password')">
+
+                <i class="bi bi-lock input-icon"></i>
+
+                <input
+                  id="password"
+                  [type]="showPassword ? 'text' : 'password'"
+                  formControlName="password"
+                  placeholder="Minimum 6 characters"
+                  autocomplete="new-password" />
+
+                <button
+                  type="button"
+                  class="password-toggle"
+                  [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+                  (click)="togglePasswordVisibility()">
+
+                  <i
+                    class="bi"
+                    [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'">
+                  </i>
+                </button>
+              </div>
+
+              <small
+                class="error"
+                *ngIf="
+                  f['password'].touched &&
+                  f['password'].errors?.['required']
+                ">
+                <i class="bi bi-exclamation-circle"></i>
+                Password is required
+              </small>
+
+              <small
+                class="error"
+                *ngIf="
+                  f['password'].touched &&
+                  f['password'].errors?.['minlength']
+                ">
+                <i class="bi bi-exclamation-circle"></i>
+                Password must be at least 6 characters
+              </small>
+            </div>
+
+            <!-- Confirm password -->
+            <div class="form-group">
+              <label for="confirmPassword">
+                Confirm password <span>*</span>
+              </label>
+
+              <div
+                class="input-container"
+                [class.input-error]="
+                  isInvalid('confirmPassword') ||
+                  hasPasswordMismatch()
+                "
+                [class.input-success]="
+                  isValid('confirmPassword') &&
+                  !signupForm.errors?.['mismatch']
+                ">
+
+                <i class="bi bi-shield-lock input-icon"></i>
+
+                <input
+                  id="confirmPassword"
+                  [type]="showConfirmPassword ? 'text' : 'password'"
+                  formControlName="confirmPassword"
+                  placeholder="Re-enter your password"
+                  autocomplete="new-password" />
+
+                <button
+                  type="button"
+                  class="password-toggle"
+                  [attr.aria-label]="
+                    showConfirmPassword
+                      ? 'Hide confirm password'
+                      : 'Show confirm password'
+                  "
+                  (click)="toggleConfirmPasswordVisibility()">
+
+                  <i
+                    class="bi"
+                    [ngClass]="
+                      showConfirmPassword ? 'bi-eye-slash' : 'bi-eye'
+                    ">
+                  </i>
+                </button>
+              </div>
+
+              <small
+                class="error"
+                *ngIf="
+                  f['confirmPassword'].touched &&
+                  f['confirmPassword'].errors?.['required']
+                ">
+                <i class="bi bi-exclamation-circle"></i>
+                Confirm password is required
+              </small>
+
+              <small class="error" *ngIf="hasPasswordMismatch()">
+                <i class="bi bi-exclamation-circle"></i>
+                Passwords do not match
+              </small>
+            </div>
+          </div>
+
+          <div class="security-note">
+            <i class="bi bi-shield-check"></i>
+
+            <span>
+              Your information will be used only to manage your WiZone account.
+            </span>
+          </div>
+
+          <button
+            id="signupButton"
+            type="submit"
+            class="signup-button"
+            [disabled]="isLoading">
+
+            <ng-container *ngIf="!isLoading">
+              Create account
+              <i class="bi bi-arrow-right"></i>
+            </ng-container>
+
+            <ng-container *ngIf="isLoading">
+              <span class="spinner"></span>
+              Creating account...
+            </ng-container>
+          </button>
+
+          <p class="login-link">
+            Already have an account?
+            <a routerLink="/login">Login to WiZone</a>
+          </p>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <!-- Success modal -->
+  <div class="modal-overlay" *ngIf="showSuccessModal">
+    <div
+      class="success-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="successTitle">
+
+      <div class="success-animation">
+        <i class="bi bi-check-lg"></i>
+      </div>
+
+      <h2 id="successTitle">Registration successful!</h2>
+
+      <p>
+        Your WiZone account has been created successfully.
+        You can now log in using your credentials.
+      </p>
+
+      <button
+        id="successOkButton"
+        type="button"
+        class="modal-button"
+        (click)="closeModal()">
+        Continue to login
+        <i class="bi bi-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+</div>

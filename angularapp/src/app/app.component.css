@@ -1,0 +1,17 @@
+:host {
+    display: block;
+    width: 100%;
+    min-height: 100vh;
+  }
+  
+  .app-content {
+    display: block;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  .app-content {
+    min-height: calc(100vh - 76px);
+    
+  }
+  

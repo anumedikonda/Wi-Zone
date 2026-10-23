@@ -1,0 +1,248 @@
+<main class="request-wrapper">
+  <section class="request-card">
+    <header>
+      <h2>
+        WiFi Scheme Requests for Approval
+      </h2>
+
+      <hr />
+
+      <div
+        class="filter-row"
+        aria-label="Request filters"
+      >
+        <div>
+          <label
+            for="schemeSearch"
+            class="visually-hidden"
+          >
+            Search by Scheme Name
+          </label>
+
+          <input
+            id="schemeSearch"
+            type="text"
+            placeholder="Search by Scheme Name..."
+            [(ngModel)]="searchTerm"
+          />
+        </div>
+
+        <div>
+          <label for="statusFilter">
+            Filter by Status:
+          </label>
+
+          <select
+            id="statusFilter"
+            [(ngModel)]="statusFilter"
+          >
+            <option value="">All</option>
+
+            <option
+              *ngFor="let status of statusOptions"
+              [value]="status"
+            >
+              {{ status }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <ng-container
+      *ngIf="filteredRequests() as filteredRequestList"
+    >
+      <table
+        class="request-table"
+        *ngIf="filteredRequestList.length > 0"
+      >
+        <thead>
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Username</th>
+            <th scope="col">Scheme Name</th>
+            <th scope="col">City</th>
+            <th scope="col">Request Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr
+            *ngFor="
+              let request of filteredRequestList;
+              let index = index
+            "
+          >
+            <td>{{ index + 1 }}</td>
+
+            <td>
+              {{ request.user?.username || 'N/A' }}
+            </td>
+
+            <td>
+              {{
+                request.wifiScheme?.schemeName ||
+                'N/A'
+              }}
+            </td>
+
+            <td>{{ request.city }}</td>
+            <td>{{ request.requestDate }}</td>
+
+            <td>
+              <span
+                [ngClass]="{
+                  'status-approved':
+                    request.status === 'Approved',
+                  'status-pending':
+                    request.status === 'Pending',
+                  'status-rejected':
+                    request.status === 'Rejected'
+                }"
+                
+              >
+                {{ request.status }}
+              </span>
+            </td>
+
+            <td>
+              <button
+                type="button"
+                class="btn-show"
+                (click)="showDetails(request)"
+              >
+                Show More
+              </button>
+
+              <ng-container
+                *ngIf="request.status === 'Pending'"
+              >
+                <button
+                  type="button"
+                  class="btn-approve"
+                  (click)="
+                    updateStatus(
+                      request,
+                      'Approved'
+                    )
+                  "
+                >
+                  Approve
+                </button>
+
+                <button
+                  type="button"
+                  class="btn-reject"
+                  (click)="
+                    updateStatus(
+                      request,
+                      'Rejected'
+                    )
+                  "
+                >
+                  Reject
+                </button>
+              </ng-container>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p
+        class="no-data"
+        *ngIf="filteredRequestList.length === 0"
+      >
+        Oops! No records found
+      </p>
+    </ng-container>
+  </section>
+</main>
+
+<!-- Request Details Modal -->
+
+<div
+  class="modal-overlay"
+  *ngIf="selectedRequest as request"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="requestDetailsTitle"
+>
+  <article class="modal-content">
+    <button
+      type="button"
+      class="close-btn"
+      (click)="closeDetails()"
+      aria-label="Close request details"
+    ></button>
+
+    <header>
+      <h3 id="requestDetailsTitle">
+        Request Details
+      </h3>
+    </header>
+
+    <section>
+      <p>
+        <strong>Username:</strong>
+        {{ request.user?.username || 'N/A' }}
+      </p>
+
+      <p>
+        <strong>Scheme Name:</strong>
+        {{
+          request.wifiScheme?.schemeName ||
+          'N/A'
+        }}
+      </p>
+
+      <p>
+        <strong>City:</strong>
+        {{ request.city }}
+      </p>
+
+      <p>
+        <strong>Request Date:</strong>
+        {{ request.requestDate }}
+      </p>
+
+      <p>
+        <strong>Status:</strong>
+        {{ request.status }}
+      </p>
+
+      <p>
+        <strong>Street Name:</strong>
+        {{ request.streetName }}
+      </p>
+
+      <p>
+        <strong>Landmark:</strong>
+        {{ request.landmark }}
+      </p>
+
+      <p>
+        <strong>Preferred Setup Date:</strong>
+        {{ request.preferredSetupDate }}
+      </p>
+
+      <p>
+        <strong>Time Slot:</strong>
+        {{ request.timeSlot }}
+      </p>
+
+      <figure *ngIf="request.proof">
+        <figcaption>
+          <strong>Proof Document</strong>
+        </figcaption>
+
+        <img
+          [src]="request.proof"
+          alt="Proof document submitted with the WiFi request"
+          class="proof-image"
+        />
+      </figure>
+    </section>
+  </article>
+</div>

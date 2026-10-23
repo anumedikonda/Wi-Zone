@@ -1,0 +1,205 @@
+
+<main class="view-wrapper">
+  <section class="view-card">
+    <header>
+      <h2>WiFi Schemes</h2>
+      <hr />
+    </header>
+
+    <section class="filter-row" aria-label="Filters">
+      <div>
+        <label for="searchName">Search by Name:</label>
+
+        <input
+          id="searchName"
+          type="text"
+          placeholder="Enter scheme name"
+          [(ngModel)]="searchTerm"
+          name="searchTerm"
+        />
+      </div>
+
+      <div>
+        <label for="regionFilter">Filter by Region:</label>
+
+        <select
+          id="regionFilter"
+          [(ngModel)]="selectedRegion"
+          name="selectedRegion"
+        >
+          <option value="">All Regions</option>
+
+          <option
+            *ngFor="let region of regions"
+            [value]="region"
+          >
+            {{ region }}
+          </option>
+        </select>
+      </div>
+    </section>
+
+    <section aria-label="WiFi Schemes List">
+      <ng-container *ngIf="filteredSchemes() as filteredSchemeList">
+        <table
+          class="scheme-table"
+          *ngIf="filteredSchemeList.length > 0"
+        >
+          <thead>
+            <tr>
+              <th scope="col">Scheme Name</th>
+              <th scope="col">Region</th>
+              <th scope="col">Speed</th>
+              <th scope="col">Data Limit</th>
+              <th scope="col">Fee</th>
+              <th scope="col">Description</th>
+              <th scope="col">Availability</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let scheme of filteredSchemeList">
+              <th scope="row">
+                {{ scheme.schemeName }}
+              </th>
+
+              <td>{{ scheme.region }}</td>
+              <td>{{ scheme.speed }}</td>
+              <td>{{ scheme.dataLimit }}</td>
+              <td>₹ {{ scheme.fee }}</td>
+
+              <td class="description-cell">
+                {{ scheme.description }}
+              </td>
+
+              <td>
+                <span
+                  [ngClass]="{
+                    'status-available':
+                      scheme.availabilityStatus === 'Available',
+                    'status-unavailable':
+                      scheme.availabilityStatus === 'Unavailable'
+                  }"
+                  
+                >
+                  {{ scheme.availabilityStatus }}
+                </span>
+              </td>
+
+              <td>
+                <div class="action-group">
+                  <button
+                    type="button"
+                    class="btn-edit"
+                    (click)="edit(scheme.wifiSchemeId)"
+                    [disabled]="
+                      scheme.availabilityStatus === 'Available' ||
+                      scheme.wifiSchemeId === undefined
+                    "
+                    [title]="
+                      scheme.availabilityStatus === 'Available'
+                        ? 'Make scheme unavailable to edit'
+                        : 'Edit scheme'
+                    "
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn-delete"
+                    (click)="confirmDelete(scheme.wifiSchemeId)"
+                    [disabled]="
+                      scheme.availabilityStatus === 'Available' ||
+                      scheme.wifiSchemeId === undefined
+                    "
+                    [title]="
+                      scheme.availabilityStatus === 'Available'
+                        ? 'Make scheme unavailable to delete'
+                        : 'Delete scheme'
+                    "
+                  >
+                    Delete
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn-toggle"
+                    (click)="toggleAvailability(scheme)"
+                    [disabled]="scheme.wifiSchemeId === undefined"
+                  >
+                    {{
+                      scheme.availabilityStatus === 'Available'
+                        ? 'Make Unavailable'
+                        : 'Make Available'
+                    }}
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p
+          class="no-data"
+          *ngIf="filteredSchemeList.length === 0"
+        >
+          Oops! No records found
+        </p>
+      </ng-container>
+    </section>
+  </section>
+
+  <aside
+    class="modal"
+    *ngIf="showDeleteModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="deleteModalMessage"
+  >
+    <section class="modal-content">
+      <p id="deleteModalMessage">
+        Are you sure you want to delete this WiFi scheme?
+      </p>
+
+      <button
+        type="button"
+        class="btn-cancel"
+        (click)="cancelDelete()"
+      >
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        class="btn-danger"
+        (click)="deleteScheme()"
+      >
+        Yes, Delete
+      </button>
+    </section>
+  </aside>
+
+  <aside
+    class="modal"
+    *ngIf="showSuccessModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="successModalMessage"
+  >
+    <section class="modal-content">
+      <p id="successModalMessage">
+        {{ successMessage }}
+      </p>
+
+      <button
+        type="button"
+        class="btn-primary"
+        (click)="closeSuccessModal()"
+      >
+        OK
+      </button>
+    </section>
+  </aside>
+</main>

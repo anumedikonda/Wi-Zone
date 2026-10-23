@@ -1,0 +1,183 @@
+<div class="applied-wrapper">
+  <h2>My Applied Requests</h2>
+  <hr />
+
+  <div
+    class="cards-container"
+    *ngIf="requests.length > 0"
+  >
+    <div
+      class="request-card"
+      *ngFor="let request of requests"
+      [ngClass]="{
+        'card-approved': request.status === 'Approved',
+        'card-pending': request.status === 'Pending',
+        'card-rejected': request.status === 'Rejected'
+      }"
+    >
+      <h3>{{ request.wifiScheme?.schemeName }}</h3>
+
+      <p>
+        <b>Status:</b>
+
+        <span
+          [ngClass]="{
+            'status-approved': request.status === 'Approved',
+            'status-pending': request.status === 'Pending',
+            'status-rejected': request.status === 'Rejected'
+          }"
+        >
+          {{ request.status }}
+        </span>
+      </p>
+
+      <p>
+        <b>City:</b>
+        {{ request.city }}
+      </p>
+
+      <p>
+        <b>Request Date:</b>
+        {{ request.requestDate }}
+      </p>
+
+      <div class="actions">
+        <button
+          type="button"
+          class="btn-info"
+          (click)="openDetails(request)"
+        >
+          Show More
+        </button>
+
+        <button
+          type="button"
+          class="btn-danger"
+          (click)="confirmDelete(request.wifiSchemeRequestId)"
+        >
+          Delete
+        </button>
+
+        <button
+          type="button"
+          *ngIf="request.status === 'Approved'"
+          class="btn-review"
+          (click)="writeReview(request.wifiScheme?.wifiSchemeId)"
+        >
+          Feedback
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <p
+    class="no-data"
+    *ngIf="requests.length === 0"
+  >
+    Oops! No records found
+  </p>
+
+  <div
+    class="modal"
+    *ngIf="selectedRequest"
+  >
+    <div class="modal-content details-modal">
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="closeDetails()"
+      >
+        &times;
+      </button>
+
+      <h3>Request Details</h3>
+
+      <p>
+        <b>Scheme Name:</b>
+        <span>
+          {{ selectedRequest.wifiScheme?.schemeName }}
+        </span>
+      </p>
+
+      <p>
+        <b>Status:</b>
+        <span>{{ selectedRequest.status }}</span>
+      </p>
+
+      <p>
+        <b>Request Date:</b>
+        <span>{{ selectedRequest.requestDate }}</span>
+      </p>
+
+      <p>
+        <b>Street Name:</b>
+        <span>{{ selectedRequest.streetName }}</span>
+      </p>
+
+      <p>
+        <b>Landmark:</b>
+        <span>{{ selectedRequest.landmark }}</span>
+      </p>
+
+      <p>
+        <b>City:</b>
+        <span>{{ selectedRequest.city }}</span>
+      </p>
+
+      <p>
+        <b>State:</b>
+        <span>{{ selectedRequest.state }}</span>
+      </p>
+
+      <p>
+        <b>ZIP Code:</b>
+        <span>{{ selectedRequest.zipCode }}</span>
+      </p>
+
+      <p>
+        <b>Preferred Setup Date:</b>
+        <span>{{ selectedRequest.preferredSetupDate }}</span>
+      </p>
+
+      <p>
+        <b>Time Slot:</b>
+        <span>{{ selectedRequest.timeSlot }}</span>
+      </p>
+
+      <p>
+        <b>Comments:</b>
+        <span>{{ selectedRequest.comments || 'N/A' }}</span>
+      </p>
+    </div>
+  </div>
+
+  <div
+    class="modal"
+    *ngIf="showDeleteModal"
+  >
+    <div class="modal-content confirm-modal">
+      <p>
+        Are you sure you want to delete this request?
+      </p>
+
+      <div class="modal-actions">
+        <button
+          type="button"
+          class="btn-cancel"
+          (click)="cancelDelete()"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          class="btn-danger"
+          (click)="deleteRequest()"
+        >
+          Yes, Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

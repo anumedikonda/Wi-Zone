@@ -1,0 +1,171 @@
+<header class="navbar-wrapper">
+  <nav class="navbar">
+    <a
+      class="brand"
+      routerLink="/user/home"
+      (click)="closeMenu()"
+    >
+      <span class="logo-box">
+        <span class="wifi-arc wifi-arc-one"></span>
+        <span class="wifi-arc wifi-arc-two"></span>
+        <span class="wifi-dot"></span>
+      </span>
+
+      <span class="brand-text">
+        Wi<span>Zone</span>
+      </span>
+    </a>
+
+    <button
+      type="button"
+      class="menu-button"
+      aria-label="Open navigation menu"
+      [class.menu-active]="menuOpen"
+      (click)="toggleMenu()"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <div
+      class="navbar-content"
+      [class.navbar-open]="menuOpen"
+    >
+      <ul class="nav-links">
+        <li>
+          <a
+            routerLink="/user/home"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{
+              exact: true
+            }"
+            (click)="closeMenu()"
+          >
+            <span
+              class="nav-icon home-icon"
+            ></span>
+
+            <span>Home</span>
+          </a>
+        </li>
+
+        <li>
+          <a
+            routerLink="/user/view-schemes"
+            routerLinkActive="active"
+            (click)="closeMenu()"
+          >
+            <span
+              class="nav-icon scheme-icon"
+            >
+              <span class="scheme-line"></span>
+              <span class="scheme-line"></span>
+              <span class="scheme-line"></span>
+            </span>
+
+            <span>WiFi Schemes</span>
+          </a>
+        </li>
+
+        <li>
+          <a
+            routerLink="/user/applied-requests"
+            routerLinkActive="active"
+            (click)="closeMenu()"
+          >
+            <span
+              class="nav-icon request-icon"
+            >
+              ✓
+            </span>
+
+            <span>My Requests</span>
+          </a>
+        </li>
+
+        <li>
+          <a
+            routerLink="/user/my-feedbacks"
+            routerLinkActive="active"
+            (click)="closeMenu()"
+          >
+            <span
+              class="nav-icon feedback-icon"
+            >
+              <span></span>
+            </span>
+
+            <span>Feedback</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="profile-section">
+        <div class="user-information">
+          <span class="avatar">
+            {{ getInitial() }}
+          </span>
+
+          <div class="user-details">
+            <strong>{{ username }}</strong>
+            <span>User account</span>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="logout-button"
+          (click)="openLogoutModal()"
+        >
+          <span class="logout-icon">→</span>
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div
+  class="modal-overlay"
+  *ngIf="showLogoutModal"
+>
+  <div
+   class="logout-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="userLogoutTitle"
+  >
+    <span class="modal-icon">
+      <span class="modal-door"></span>
+      <span class="modal-arrow">→</span>
+    </span>
+
+    <h2 id="userLogoutTitle">
+      Logout from WiZone?
+    </h2>
+
+    <p>
+      You will need to enter your login credentials
+      again to access your account.
+    </p>
+
+    <div class="modal-actions">
+      <button
+        type="button"
+        class="cancel-button"
+        (click)="closeLogoutModal()"
+      >
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        class="confirm-button"
+        (click)="logout()"
+      >
+        Yes, Logout
+      </button>
+    </div>
+  </div>
+</div>

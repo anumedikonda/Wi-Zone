@@ -1,0 +1,66 @@
+<div class="feedback-wrapper">
+  <div class="feedback-card">
+    <h2>Add Feedback</h2><hr/>
+
+    <form [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Feedback*</label>
+        <textarea rows="5" formControlName="feedbackText"
+                  placeholder="Write your feedback here (minimum 10 characters)"
+                  maxlength="500"></textarea>
+        <small class="error" *ngIf="f['feedbackText'].touched && f['feedbackText'].errors?.['required']">
+          Feedback is required
+        </small>
+
+        <small class="error" *ngIf="f['feedbackText'].touched && f['feedbackText'].errors?.['minlength']">
+          Feedback must be at least 10 characters
+        </small>
+
+        <small class="error" *ngIf="f['feedbackText'].touched && f['feedbackText'].errors?.['maxlength']">
+          Feedback cannot exceed 500 characters
+        </small>
+
+        <small class="error" *ngIf="f['feedbackText'].touched && f['feedbackText'].errors?.['onlyWhitespace']">
+          Feedback cannot be empty or only spaces
+        </small>
+
+        <small class="error" *ngIf="f['feedbackText'].touched && f['feedbackText'].errors?.['notMeaningful']">
+          Please provide meaningful feedback with actual words
+        </small>
+
+        <small class="error" *ngIf="f['feedbackText'].touched && f['feedbackText'].errors?.['onlyNumbers']">
+          Feedback cannot be only numbers
+        </small>
+
+        <small class="error" *ngIf="f['feedbackText'].touched && f['feedbackText'].errors?.['repeatingChars']">
+          Please provide meaningful feedback (not repeating characters)
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label>Category*</label>
+        <select formControlName="category">
+          <option value="">Select category</option>
+          <option value="Service">Service</option>
+          <option value="Pricing">Pricing</option>
+          <option value="Speed">Speed</option>
+          <option value="Support">Support</option>
+        </select>
+        <small class="error" *ngIf="f['category'].touched && f['category'].errors?.['required']">
+          Category is required
+        </small>
+      </div>
+
+      <button type="submit" class="btn-primary" [disabled]="feedbackForm.invalid">
+        Submit Feedback
+      </button>
+    </form>
+
+    <div class="modal" *ngIf="showSuccessModal">
+      <div class="modal-content">
+        <p>Successfully Added!</p>
+        <button class="btn-primary" (click)="closeModal()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

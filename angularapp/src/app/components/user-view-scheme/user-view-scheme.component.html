@@ -1,0 +1,121 @@
+<div class="view-wrapper">
+  <h2>Available WiFi Schemes</h2>
+  <hr />
+
+  <br /><br />
+
+  <div class="filter-row">
+    <input
+      type="text"
+      placeholder="Search by Scheme Name / Description / Region..."
+      [(ngModel)]="searchTerm"
+    />
+
+    <div>
+      <label>Filter by Region:</label>
+
+      <select [(ngModel)]="selectedRegion">
+        <option value="">All Regions</option>
+
+        <ng-template
+          ngFor
+          let-region
+          [ngForOf]="regions"
+        >
+          <option [value]="region">
+            {{ region }}
+          </option>
+        </ng-template>
+      </select>
+    </div>
+  </div>
+
+  <br /><br />
+
+  <table class="scheme-table">
+    <thead>
+      <tr>
+        <th>Scheme Name</th>
+        <th>Region</th>
+        <th>Speed</th>
+        <th>Data Limit</th>
+        <th>Fee</th>
+        <th>Description</th>
+        <th>Availability</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-template
+        ngFor
+        let-scheme
+        [ngForOf]="filteredSchemes()"
+      >
+        <tr>
+          <td>{{ scheme.schemeName }}</td>
+          <td>{{ scheme.region }}</td>
+          <td>{{ scheme.speed }}</td>
+          <td>{{ scheme.dataLimit }}</td>
+          <td>₹ {{ scheme.fee }}</td>
+          <td>{{ scheme.description }}</td>
+          <td>{{ scheme.availabilityStatus }}</td>
+
+          <td>
+            <ng-template
+              [ngIf]="
+                !isApplied(scheme.wifiSchemeId) &&
+                scheme.availabilityStatus === 'Available'
+              "
+            >
+              <button
+                class="btn-apply"
+                (click)="apply(scheme.wifiSchemeId)"
+              >
+                Subscribe
+              </button>
+            </ng-template>
+
+            <ng-template
+              [ngIf]="isApplied(scheme.wifiSchemeId) "
+               
+            >
+
+              <button
+                class="btn-applied"
+                disabled
+              >
+                Subscribed
+              </button>
+            </ng-template>
+
+            <ng-template
+              [ngIf]="
+                scheme.availabilityStatus === 'Unavailable' &&
+                !isApplied(scheme.wifiSchemeId)
+
+              "
+            >
+              <button
+                class="btn-disabled"
+                disabled
+              >
+                Unavailable
+              </button>
+            </ng-template>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template
+        [ngIf]="filteredSchemes().length === 0"
+      >
+        <tr>
+          <td colspan="8" class="no-data">
+            Oops! No records found
+          </td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+</div>

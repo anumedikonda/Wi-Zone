@@ -1,0 +1,9 @@
+<app-adminnav *ngIf="isAdmin"></app-adminnav>
+
+<app-usernav *ngIf="isUser"></app-usernav>
+
+<main class="app-content">
+  <app-loader></app-loader>
+
+  <router-outlet></router-outlet>
+</main>

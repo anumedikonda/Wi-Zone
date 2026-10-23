@@ -1,0 +1,477 @@
+<main class="scheme-wrapper">
+  <section class="scheme-card">
+
+    <header class="form-header">
+      <button
+        *ngIf="isEditing"
+        class="back-btn"
+        type="button"
+        (click)="goBack()"
+      >
+        <span
+          class="back-arrow"
+          aria-hidden="true"
+        >
+          ←
+        </span>
+
+        <span>Back</span>
+      </button>
+
+      <h2>
+        {{
+          isEditing
+            ? 'Edit WiFi Scheme'
+            : 'Create New WiFi Scheme'
+        }}
+      </h2>
+
+      <hr />
+    </header>
+
+    <form
+      [formGroup]="schemeForm"
+      
+      (ngSubmit)="onSubmit()"
+      novalidate
+    >
+
+      <!-- Scheme Name -->
+
+      <section class="form-group">
+        <label for="schemeName">
+          Scheme Name
+        </label>
+
+        <input
+          id="schemeName"
+          type="text"
+          formControlName="schemeName"
+          placeholder="Enter scheme name"
+          maxlength="50"
+        />
+
+        <small
+          class="error"
+          *ngIf="
+            f.schemeName.touched &&
+            f.schemeName.errors?.['required']
+          "
+        >
+          Scheme Name is required
+        </small>
+
+        <small
+          class="error"
+          *ngIf="
+            f.schemeName.touched &&
+            f.schemeName.errors?.['minlength']
+          "
+        >
+          Scheme Name must be at least 3 characters
+        </small>
+
+        <small
+          class="error"
+          *ngIf="
+            f.schemeName.touched &&
+            f.schemeName.errors?.['maxlength']
+          "
+        >
+          Scheme Name cannot be more than 50 characters
+        </small>
+
+        <small
+          class="error"
+          *ngIf="
+            f.schemeName.touched &&
+            f.schemeName.errors?.['pattern']
+          "
+        >
+          Scheme Name must start with a letter and
+          contain only letters, numbers and spaces
+        </small>
+      </section>
+
+      <!-- Description -->
+
+      <section class="form-group">
+        <label for="description">
+          Description
+        </label>
+
+        <textarea
+          id="description"
+          rows="4"
+          formControlName="description"
+          placeholder="Enter description"
+          maxlength="200"
+        ></textarea>
+
+        <small
+          class="error"
+          *ngIf="
+            f.description.touched &&
+            f.description.errors?.['required']
+          "
+        >
+          Description is required
+        </small>
+
+        <small
+          class="error"
+          *ngIf="
+            f.description.touched &&
+            f.description.errors?.['minlength']
+          "
+        >
+          Description must be at least 10 characters
+        </small>
+
+        <small
+          class="error"
+          *ngIf="
+            f.description.touched &&
+            f.description.errors?.['maxlength']
+          "
+        >
+          Description cannot be more than 200 characters
+        </small>
+
+        <small
+          class="error"
+          *ngIf="
+            f.description.touched &&
+            f.description.errors?.['pattern']
+          "
+        >
+          Description cannot contain only spaces
+        </small>
+      </section>
+
+      <!-- Region -->
+
+      <section class="form-group">
+        <label for="region">
+          Region
+        </label>
+
+        <input
+          id="region"
+          type="text"
+          formControlName="region"
+          placeholder="Enter region"
+          maxlength="40"
+        />
+
+        <small
+          class="error"
+          *ngIf="
+            f.region.touched &&
+            f.region.errors?.['required']
+          "
+        >
+          Region is required
+        </small>
+
+        <small
+          class="error"
+          *ngIf="
+            f.region.touched &&
+            f.region.errors?.['minlength']
+          "
+        >
+          Region must be at least 3 characters
+        </small>
+
+        <small
+          class="error"
+          *ngIf="
+            f.region.touched &&
+            f.region.errors?.['maxlength']
+          "
+        >
+          Region cannot be more than 40 characters
+        </small>
+
+        <small
+          class="error"
+          *ngIf="
+            f.region.touched &&
+            f.region.errors?.['pattern']
+          "
+        >
+          Region must start with a letter and contain
+          only letters and spaces
+        </small>
+      </section>
+
+      <!-- Speed -->
+
+      <section class="form-group">
+        <label for="speed">
+          Speed
+        </label>
+
+        <div class="input-with-unit">
+          <input
+            id="speed"
+            type="text"
+            formControlName="speed"
+            placeholder="Example: 100"
+            maxlength="4"
+          />
+
+          <span class="unit-text">
+            Mbps
+          </span>
+        </div>
+
+        <small
+          class="error"
+          *ngIf="
+            f.speed.touched &&
+            f.speed.errors?.['required']
+          "
+        >
+          Speed is required
+        </small>
+
+        <small
+          class="error"
+          *ngIf="
+            f.speed.touched &&
+            f.speed.errors?.['pattern']
+          "
+        >
+          Enter only numbers.
+          <br />
+          Letters, special characters and starting
+          zero are not allowed
+        </small>
+
+        <small
+          class="error"
+          *ngIf="
+            f.speed.touched &&
+            f.speed.errors?.['min']
+          "
+        >
+          Speed must be greater than 0
+        </small>
+
+        <small
+          class="error"
+          *ngIf="
+            f.speed.touched &&
+            f.speed.errors?.['max']
+          "
+        >
+          Speed cannot be more than 1000 Mbps
+        </small>
+      </section>
+
+      <!-- Data Limit -->
+
+      <section class="form-group">
+        <label for="dataLimit">
+          Data Limit
+        </label>
+
+        <div class="input-with-unit">
+          <input
+            id="dataLimit"
+            type="text"
+            formControlName="dataLimit"
+            placeholder="Example: 500"
+            maxlength="4"
+          />
+
+          <span class="unit-text">
+            GB
+          </span>
+        </div>
+
+        <small
+          class="error"
+          *ngIf="
+            f.dataLimit.touched &&
+            f.dataLimit.errors?.['required']
+          "
+        >
+          Data Limit is required
+        </small>
+
+        <small
+          class="error"
+          *ngIf="
+            f.dataLimit.touched &&
+            f.dataLimit.errors?.['pattern']
+          "
+        >
+          Enter only numbers.
+          <br />
+          0, 000, 05, letters and GB text are not allowed
+        </small>
+
+        <small
+          class="error"
+          *ngIf="
+            f.dataLimit.touched &&
+            f.dataLimit.errors?.['min']
+          "
+        >
+          Data Limit must be greater than 0
+        </small>
+
+        <small
+          class="error"
+          *ngIf="
+            f.dataLimit.touched &&
+            f.dataLimit.errors?.['max']
+          "
+        >
+          Data Limit cannot be more than 1000 GB
+        </small>
+      </section>
+
+      <!-- Fee -->
+
+      <section class="form-group">
+        <label for="fee">
+          Fee
+        </label>
+
+        <input
+          id="fee"
+          type="text"
+          formControlName="fee"
+          placeholder="Enter monthly fee"
+          maxlength="5"
+        />
+
+        <small
+          class="error"
+          *ngIf="
+            f.fee.touched &&
+            f.fee.errors?.['required']
+          "
+        >
+          Fee is required
+        </small>
+
+        <small
+          class="error"
+          *ngIf="
+            f.fee.touched &&
+            f.fee.errors?.['pattern']
+          "
+        >
+          Enter only numbers.
+          <br />
+          Zero, negative value, letters and special
+          characters are not allowed
+        </small>
+
+        <small
+          class="error"
+          *ngIf="
+            f.fee.touched &&
+            f.fee.errors?.['min']
+          "
+        >
+          Fee must be at least 99
+        </small>
+
+        <small
+          class="error"
+          *ngIf="
+            f.fee.touched &&
+            f.fee.errors?.['max']
+          "
+        >
+          Fee cannot be more than 11000
+        </small>
+      </section>
+
+      <!-- Availability -->
+
+      <section class="form-group">
+        <label for="availabilityStatus">
+          Availability
+        </label>
+
+        <select
+          id="availabilityStatus"
+          formControlName="availabilityStatus"
+        >
+          <option
+            *ngFor="let status of availabilityOptions"
+            [value]="status"
+          >
+            {{ status }}
+          </option>
+        </select>
+
+        <small
+          class="error"
+          *ngIf="
+            f.availabilityStatus.touched &&
+            f.availabilityStatus.errors?.['required']
+          "
+        >
+          Availability is required
+        </small>
+      </section>
+
+      <p
+        class="error all-required"
+        *ngIf="showAllRequired"
+      >
+        Please fill all required fields correctly
+      </p>
+
+      <footer class="form-footer">
+        <button
+          type="submit"
+          class="btn-primary"
+        >
+          {{
+            isEditing
+              ? 'Update WiFi Scheme'
+              : 'Add WiFi Scheme'
+          }}
+        </button>
+      </footer>
+    </form>
+
+    <!-- Success Modal -->
+
+    <section
+      class="modal"
+      *ngIf="showSuccessModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="successMessage"
+    >
+      <article class="modal-content">
+        <p id="successMessage">
+          {{
+            isEditing
+              ? 'WiFi Scheme Updated Successfully!'
+              : 'WiFi Scheme Added Successfully!'
+          }}
+        </p>
+
+        <button
+          class="btn-primary"
+          type="button"
+          (click)="closeModal()"
+        >
+          OK
+        </button>
+      </article>
+    </section>
+
+  </section>
+</main>

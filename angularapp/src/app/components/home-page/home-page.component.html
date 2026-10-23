@@ -1,0 +1,353 @@
+<main class="home-page">
+
+
+  <section class="hero-section" aria-labelledby="hero-heading">
+
+    <aside class="hero-decoration circle-one" aria-hidden="true"></aside>
+    <aside class="hero-decoration circle-two" aria-hidden="true"></aside>
+    <aside class="hero-decoration dot-one" aria-hidden="true"></aside>
+    <aside class="hero-decoration dot-two" aria-hidden="true"></aside>
+
+    <div class="hero-container">
+
+      <article class="hero-content">
+
+        <p class="welcome-pill">
+          <span class="welcome-dot" aria-hidden="true"></span>
+          <span *ngIf="username">Welcome, {{ username }}</span>
+          <span *ngIf="!username">Welcome to WiZone</span>
+        </p>
+
+        <h1 id="hero-heading">
+          Fast, reliable WiFi
+          <span>built around you.</span>
+        </h1>
+
+        <p class="hero-description">
+          Discover high-speed WiFi plans designed for your location,
+          connectivity needs, and monthly budget.
+        </p>
+
+        <nav class="hero-actions" aria-label="Primary actions">
+
+          <button type="button" class="primary-button" (click)="explorePlans()">
+            <span class="button-wifi" aria-hidden="true">
+              <span class="button-arc button-arc-one"></span>
+              <span class="button-arc button-arc-two"></span>
+              <span class="button-dot"></span>
+            </span>
+            <span>{{ getPrimaryButtonText() }}</span>
+            <span class="button-arrow" aria-hidden="true">→</span>
+          </button>
+
+          <button type="button" class="secondary-button" (click)="scrollToFeatures()">
+            <span class="play-icon" aria-hidden="true">▶</span>
+            Why choose WiZone?
+          </button>
+
+        </nav>
+
+        <dl class="hero-statistics">
+
+          <div class="statistic-item">
+            <dt>Reliable uptime</dt>
+            <dd><strong>99.9%</strong></dd>
+          </div>
+
+          <span class="statistic-divider" aria-hidden="true"></span>
+
+          <div class="statistic-item">
+            <dt>Connectivity access</dt>
+            <dd><strong>24/7</strong></dd>
+          </div>
+
+          <span class="statistic-divider" aria-hidden="true"></span>
+
+          <div class="statistic-item">
+            <dt>Account experience</dt>
+            <dd><strong>Secure</strong></dd>
+          </div>
+
+        </dl>
+
+      </article>
+
+      <figure class="hero-visual" aria-label="WiFi router illustration">
+
+        <span class="visual-glow" aria-hidden="true"></span>
+
+        <div class="wifi-illustration">
+
+          <span class="signal-circle signal-circle-one" aria-hidden="true"></span>
+          <span class="signal-circle signal-circle-two" aria-hidden="true"></span>
+
+          <div class="large-wifi" aria-hidden="true">
+            <span class="large-wifi-arc wifi-arc-one"></span>
+            <span class="large-wifi-arc wifi-arc-two"></span>
+            <span class="large-wifi-arc wifi-arc-three"></span>
+            <span class="large-wifi-dot"></span>
+          </div>
+
+          <div class="router-device" aria-hidden="true">
+
+            <span class="router-antenna antenna-left"></span>
+            <span class="router-antenna antenna-right"></span>
+
+            <div class="router-top">
+              <span class="router-light light-one"></span>
+              <span class="router-light light-two"></span>
+              <span class="router-light light-three"></span>
+            </div>
+
+            <div class="router-front">
+              <span class="router-brand">Wi<span>Zone</span></span>
+              <span class="router-status">
+                <span></span>
+                Online
+              </span>
+            </div>
+
+          </div>
+
+          <aside class="floating-card speed-card">
+            <span class="floating-icon speed-symbol" aria-hidden="true">ϟ</span>
+            <div>
+              <strong>High Speed</strong>
+              <small>Stable connection</small>
+            </div>
+          </aside>
+
+          <aside class="floating-card secure-card">
+            <span class="floating-icon shield-mini" aria-hidden="true">✓</span>
+            <div>
+              <strong>Protected</strong>
+              <small>Secure access</small>
+            </div>
+          </aside>
+
+          <aside class="floating-card coverage-card">
+            <span class="floating-icon location-mini" aria-hidden="true"></span>
+            <div>
+              <strong>Wide Coverage</strong>
+              <small>Regional plans</small>
+            </div>
+          </aside>
+
+        </div>
+
+      </figure>
+
+    </div>
+
+  </section>
+
+
+  <section id="features" class="features-section" aria-labelledby="features-heading">
+
+    <header class="section-heading">
+      <p class="section-label">Why WiZone?</p>
+      <h2 id="features-heading">Everything you need to stay connected</h2>
+      <p>
+        WiZone combines speed, value, reliability, and security
+        into one simple connectivity platform.
+      </p>
+    </header>
+
+    <ul class="feature-grid" role="list">
+
+      <li>
+        <article class="feature-card">
+          <figure class="feature-icon-box blue-icon" aria-hidden="true">
+            <span class="small-wifi">
+              <span class="small-arc small-arc-one"></span>
+              <span class="small-arc small-arc-two"></span>
+              <span class="small-dot"></span>
+            </span>
+          </figure>
+          <div class="feature-text">
+            <h3>High Speed</h3>
+            <p>
+              Explore WiFi schemes with speeds that match your work,
+              learning, streaming, and browsing needs.
+            </p>
+          </div>
+          <span class="card-number" aria-hidden="true">01</span>
+        </article>
+      </li>
+
+      <li>
+        <article class="feature-card">
+          <figure class="feature-icon-box purple-icon" aria-hidden="true">
+            <span class="wallet-icon">
+              <span class="wallet-line"></span>
+              <span class="wallet-button"></span>
+            </span>
+          </figure>
+          <div class="feature-text">
+            <h3>Affordable</h3>
+            <p>
+              Compare cost-effective plans and select a scheme that
+              fits comfortably within your monthly budget.
+            </p>
+          </div>
+          <span class="card-number" aria-hidden="true">02</span>
+        </article>
+      </li>
+
+      <li>
+        <article class="feature-card">
+          <figure class="feature-icon-box cyan-icon" aria-hidden="true">
+            <span class="reliable-icon">
+              <span class="reliable-hand"></span>
+            </span>
+          </figure>
+          <div class="feature-text">
+            <h3>Reliable</h3>
+            <p>
+              Access dependable connectivity plans designed for
+              consistent performance and regional availability.
+            </p>
+          </div>
+          <span class="card-number" aria-hidden="true">03</span>
+        </article>
+      </li>
+
+      <li>
+        <article class="feature-card">
+          <figure class="feature-icon-box green-icon" aria-hidden="true">
+            <span class="security-shield">
+              <span>✓</span>
+            </span>
+          </figure>
+          <div class="feature-text">
+            <h3>Secure</h3>
+            <p>
+              Manage your plans, scheme requests, and feedback through
+              your protected WiZone account.
+            </p>
+          </div>
+          <span class="card-number" aria-hidden="true">04</span>
+        </article>
+      </li>
+
+    </ul>
+
+  </section>
+
+
+  <section class="about-section" aria-labelledby="about-heading">
+
+    <div class="about-container">
+
+      <figure class="about-visual" aria-label="WiZone coverage map">
+        <div class="coverage-map">
+
+          <span class="map-glow" aria-hidden="true"></span>
+
+          <span class="map-location location-one" aria-hidden="true"></span>
+          <span class="map-location location-two" aria-hidden="true"></span>
+          <span class="map-location location-three" aria-hidden="true"></span>
+          <span class="map-location location-four" aria-hidden="true"></span>
+
+          <figcaption class="coverage-center">
+            <span class="coverage-wifi" aria-hidden="true">
+              <span class="coverage-arc coverage-arc-one"></span>
+              <span class="coverage-arc coverage-arc-two"></span>
+              <span class="coverage-dot"></span>
+            </span>
+            <strong>WiZone</strong>
+            <small>Connecting every region</small>
+          </figcaption>
+
+        </div>
+      </figure>
+
+      <article class="about-content">
+
+        <p class="section-label">Made for your connectivity</p>
+
+        <h2 id="about-heading">
+          The right WiFi plan is only a few clicks away.
+        </h2>
+
+        <p>
+          WiZone connects users with tailored internet schemes.
+          Browse available plans, apply online, monitor request
+          status, and share feedback from one convenient platform.
+        </p>
+
+        <ul class="benefit-list" role="list">
+
+          <li class="benefit-item">
+            <span class="benefit-check" aria-hidden="true">✓</span>
+            <div>
+              <strong>Compare available schemes</strong>
+              <small>Review speed, data limit, region, and monthly fee.</small>
+            </div>
+          </li>
+
+          <li class="benefit-item">
+            <span class="benefit-check" aria-hidden="true">✓</span>
+            <div>
+              <strong>Submit requests online</strong>
+              <small>Apply for your preferred plan using a simple form.</small>
+            </div>
+          </li>
+
+          <li class="benefit-item">
+            <span class="benefit-check" aria-hidden="true">✓</span>
+            <div>
+              <strong>Track request progress</strong>
+              <small>View pending, approved, and rejected requests.</small>
+            </div>
+          </li>
+
+        </ul>
+
+        <button type="button" class="about-button" (click)="explorePlans()">
+          {{ getPrimaryButtonText() }}
+          <span aria-hidden="true">→</span>
+        </button>
+
+      </article>
+
+    </div>
+
+  </section>
+
+  <section class="contact-section" aria-labelledby="contact-heading">
+
+    <div class="contact-container">
+  
+      <header class="contact-content">
+        <p class="contact-label">Need assistance?</p>
+        <h2 id="contact-heading">Let us help you stay connected.</h2>
+        <p>
+          Contact the WiZone support team for questions about
+          schemes, requests, account access, and connectivity.
+        </p>
+      </header>
+  
+      <div class="contact-options">
+  
+        <div class="contact-item">
+          <p class="contact-details">
+            <strong>Call us:</strong>
+            <span> 123-456-7890</span>
+          </p>
+        </div>
+  
+        <div class="contact-item">
+          <p class="contact-details">
+            <strong>Email us:</strong>
+            <span> support@wifiselector.com</span>
+          </p>
+        </div>
+  
+      </div>
+  
+    </div>
+  
+  </section>
+
+</main>

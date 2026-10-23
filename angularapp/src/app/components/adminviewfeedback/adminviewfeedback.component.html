@@ -1,0 +1,299 @@
+<!-- <div class="feedback-wrapper">
+  <div class="feedback-card">
+    <h2>Feedback Received</h2>
+    <hr />
+
+    <div class="filter-row">
+      <label for="categoryFilter">Filter by Category:</label>
+      <select id="categoryFilter" [(ngModel)]="categoryFilter" name="categoryFilter">
+        <option value="">All Categories</option>
+        <option value="Service">Service</option>
+        <option value="Pricing">Pricing</option>
+        <option value="Speed">Speed</option>
+        <option value="Support">Support</option>
+      </select>
+    </div>
+
+    <table class="feedback-table" *ngIf="filteredFeedbacks().length > 0">
+      <thead>
+        <tr>
+          <th>S.NO</th>
+          <th>USER NAME</th>
+          <th>FEEDBACK</th>
+          <th>CATEGORY</th>
+          <th>POSTED DATE</th>
+          <th>ACTION</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let f of filteredFeedbacks(); let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ f.user?.username }}</td>
+          <td>{{ f.feedbackText }}</td>
+          <td>{{ f.category }}</td>
+          <td>{{ f.date }}</td>
+          <td>
+            <div class="action-group">
+              <button type="button" class="btn-profile" (click)="openUser(f.user)">
+                Show Profile
+              </button>
+              <button type="button" class="btn-scheme"
+                      (click)="openScheme(f.wifiScheme)"
+                      [disabled]="!f.wifiScheme">
+
+                View Scheme Info
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="no-data" *ngIf="filteredFeedbacks().length === 0">No data found</p>
+  </div>
+
+  <div class="modal" *ngIf="selectedUser">
+    <div class="modal-content">
+      <button type="button" class="close-btn" (click)="closeUser()" aria-label="Close"></button>
+      <h3>User Details</h3>
+      <p><b>Email:</b> <span>{{ selectedUser.email }}</span></p>
+      <p><b>Username:</b> <span>{{ selectedUser.username }}</span></p>
+      <p><b>Mobile Number:</b> <span>{{ selectedUser.mobileNumber }}</span></p>
+      <p><b>Role:</b> <span>{{ selectedUser.userRole }}</span></p>
+    </div>
+  </div>
+
+  <div class="modal" *ngIf="selectedScheme">
+    <div class="modal-content">
+      <button type="button" class="close-btn" (click)="closeScheme()" aria-label="Close"></button>
+      <h3>Scheme Details</h3>
+      <p><b>Scheme Name:</b> <span>{{ selectedScheme.schemeName }}</span></p>
+      <p><b>Region:</b> <span>{{ selectedScheme.region }}</span></p>
+      <p><b>Speed:</b> <span>{{ selectedScheme.speed }} Mbps</span></p>
+      <p><b>Data Limit:</b> <span>{{ selectedScheme.dataLimit }} GB</span></p>
+      <p><b>Fee:</b> <span>₹ {{ selectedScheme.fee }}</span></p>
+      <p><b>Description:</b> <span>{{ selectedScheme.description }}</span></p>
+      <p><b>Availability Status:</b> <span>{{ selectedScheme.availabilityStatus }}</span></p>
+    </div>
+  </div>
+</div> -->
+
+<div class="feedback-wrapper">
+  <div class="feedback-card">
+    <h2>Feedback Received</h2>
+
+    <hr />
+
+    <div class="filter-row">
+      <label for="categoryFilter">
+        Filter by Category:
+      </label>
+
+      <select
+        id="categoryFilter"
+        [(ngModel)]="categoryFilter"
+        
+        name="categoryFilter"
+      >
+        <option value="">
+          All Categories
+        </option>
+
+        <option
+          *ngFor="let category of categoryOptions"
+          [value]="category"
+        >
+          {{ category }}
+        </option>
+      </select>
+    </div>
+
+    <ng-container
+      *ngIf="
+        filteredFeedbacks() as filteredFeedbackList
+      "
+    >
+      <table
+        class="feedback-table"
+        *ngIf="filteredFeedbackList.length > 0"
+      >
+        <thead>
+          <tr>
+            <th scope="col">S.NO</th>
+            <th scope="col">USER NAME</th>
+            <th scope="col">FEEDBACK</th>
+            <th scope="col">CATEGORY</th>
+            <th scope="col">POSTED DATE</th>
+            <th scope="col">ACTION</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr
+            *ngFor="
+              let feedback of filteredFeedbackList;
+              let index = index
+            "
+          >
+            <td>{{ index + 1 }}</td>
+
+            <td>
+              {{
+                feedback.user?.username ||
+                'N/A'
+              }}
+            </td>
+
+            <td>
+              {{ feedback.feedbackText }}
+            </td>
+
+            <td>
+              {{ feedback.category }}
+            </td>
+
+            <td>
+              {{ feedback.date }}
+            </td>
+
+            <td>
+              <div class="action-group">
+                <button
+                  type="button"
+                  class="btn-profile"
+                  (click)="openUser(feedback.user)"
+                  [disabled]="!feedback.user"
+                >
+                  Show Profile
+                </button>
+
+                <button
+                  type="button"
+                  class="btn-scheme"
+                  (click)="
+                    openScheme(
+                      feedback.wifiScheme
+                    )
+                  "
+                  [disabled]="!feedback.wifiScheme"
+                >
+                  View Scheme Info
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p
+        class="no-data"
+        *ngIf="filteredFeedbackList.length === 0"
+      >
+        No data found
+      </p>
+    </ng-container>
+  </div>
+
+  <!-- User Details Modal -->
+
+  <div
+    class="modal"
+    *ngIf="selectedUser as user"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="userDetailsTitle"
+  >
+    <div class="modal-content">
+      <button
+        type="button"
+        class="close-btn"
+        (click)="closeUser()"
+        aria-label="Close user details"
+      ></button>
+
+      <h3 id="userDetailsTitle">
+        User Details
+      </h3>
+
+      <p>
+        <b>Email:</b>
+        <span>{{ user.email }}</span>
+      </p>
+
+      <p>
+        <b>Username:</b>
+        <span>{{ user.username }}</span>
+      </p>
+
+      <p>
+        <b>Mobile Number:</b>
+        <span>{{ user.mobileNumber }}</span>
+      </p>
+
+      <p>
+        <b>Role:</b>
+        <span>{{ user.userRole }}</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- Scheme Details Modal -->
+
+  <div
+    class="modal"
+    *ngIf="selectedScheme as scheme"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="schemeDetailsTitle"
+  >
+    <div class="modal-content">
+      <button
+        type="button"
+        class="close-btn"
+        (click)="closeScheme()"
+        aria-label="Close scheme details"
+      ></button>
+
+      <h3 id="schemeDetailsTitle">
+        Scheme Details
+      </h3>
+
+      <p>
+        <b>Scheme Name:</b>
+        <span>{{ scheme.schemeName }}</span>
+      </p>
+
+      <p>
+        <b>Region:</b>
+        <span>{{ scheme.region }}</span>
+      </p>
+
+      <p>
+        <b>Speed:</b>
+        <span>{{ scheme.speed }}</span>
+      </p>
+
+      <p>
+        <b>Data Limit:</b>
+        <span>{{ scheme.dataLimit }}</span>
+      </p>
+
+      <p>
+        <b>Fee:</b>
+        <span>₹ {{ scheme.fee }}</span>
+      </p>
+
+      <p>
+        <b>Description:</b>
+        <span>{{ scheme.description }}</span>
+      </p>
+
+      <p>
+        <b>Availability Status:</b>
+        <span>
+          {{ scheme.availabilityStatus }}
+        </span>
+      </p>
+    </div>
+  </div>
+</div>

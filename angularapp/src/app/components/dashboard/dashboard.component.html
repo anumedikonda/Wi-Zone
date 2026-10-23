@@ -1,0 +1,127 @@
+<section class="dashboard-wrapper">
+
+  <header class="dashboard-header">
+    <h2>Admin Dashboard</h2>
+    <p>Monitor schemes, availability and regional performance.</p>
+  </header>
+
+  <section class="stats-row" aria-label="Scheme summary">
+
+    <article class="stat-card total">
+      <span class="stat-icon" aria-hidden="true">📶</span>
+      <div class="stat-info">
+        <h4>Total Schemes</h4>
+        <h2>{{ totalSchemes }}</h2>
+        <span>All registered schemes</span>
+      </div>
+    </article>
+
+    <article class="stat-card available">
+      <span class="stat-icon" aria-hidden="true">✅</span>
+      <div class="stat-info">
+        <h4>Available Schemes</h4>
+        <h2>{{ availableCount }}</h2>
+        <span>{{ availablePercent }}% Active</span>
+      </div>
+    </article>
+
+    <article class="stat-card unavailable">
+      <span class="stat-icon" aria-hidden="true">❌</span>
+      <div class="stat-info">
+        <h4>Unavailable Schemes</h4>
+        <h2>{{ unavailableCount }}</h2>
+        <span>{{ unavailablePercent }}% Inactive</span>
+      </div>
+    </article>
+
+  </section>
+
+  <section class="analytics-card" aria-label="Scheme availability chart">
+
+    <header class="analytics-header">
+      <h3>Scheme Availability</h3>
+      <p>Overall availability across all WiFi plans</p>
+    </header>
+
+    <div class="analytics-body">
+
+      <figure class="analytics-left">
+        <div class="analytics-circle" [style.--percent]="availablePercent">
+          <div class="analytics-inner">
+            <h2>{{ availablePercent }}%</h2>
+            <span>Available</span>
+          </div>
+        </div>
+      </figure>
+
+      <ul class="analytics-right">
+        <li class="legend-item">
+          <span class="dot green" aria-hidden="true"></span>
+          <span>Available Schemes</span>
+          <strong>{{ availableCount }}</strong>
+        </li>
+        <li class="legend-item">
+          <span class="dot red" aria-hidden="true"></span>
+          <span>Unavailable Schemes</span>
+          <strong>{{ unavailableCount }}</strong>
+        </li>
+        <li class="legend-item">
+          <span class="dot blue" aria-hidden="true"></span>
+          <span>Total Schemes</span>
+          <strong>{{ totalSchemes }}</strong>
+        </li>
+      </ul>
+
+    </div>
+
+  </section>
+
+  <section class="details-section" aria-label="Scheme details table">
+
+    <header>
+      <h3>Scheme Details</h3>
+    </header>
+
+    <table class="detail-table">
+      <thead>
+        <tr>
+          <th scope="col">Scheme Name</th>
+          <th scope="col">Region</th>
+          <th scope="col">Fee</th>
+          <th scope="col">Availability</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of schemes">
+          <th scope="row">{{ s.schemeName }}</th>
+          <td>{{ s.region }}</td>
+          <td>₹ {{ s.fee }}</td>
+          <td>
+            <span [class.available-badge]="s.availabilityStatus === 'Available'"
+                  [class.unavailable-badge]="s.availabilityStatus !== 'Available'">
+              {{ s.availabilityStatus }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </section>
+
+  <section class="region-section" aria-label="Region-wise schemes">
+
+    <header>
+      <h3>Region-Wise Famous Schemes</h3>
+    </header>
+
+    <div class="region-grid">
+      <article class="region-card" *ngFor="let r of regionWiseSchemes">
+        <h4><span aria-hidden="true">📍</span> {{ r.region }}</h4>
+        <p><strong>Top Scheme:</strong> {{ r.topScheme }}</p>
+        <p><strong>Total Requests:</strong> {{ r.count }}</p>
+      </article>
+    </div>
+
+  </section>
+
+</section>

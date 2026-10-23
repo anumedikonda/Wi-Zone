@@ -1,0 +1,143 @@
+<header class="admin-header">
+  <nav class="admin-navbar" aria-label="Admin primary">
+
+    <a class="brand" routerLink="/admin/dashboard" (click)="closeMenu()">
+      <span class="logo-box" aria-hidden="true">
+        <span class="wifi-arc wifi-arc-one"></span>
+        <span class="wifi-arc wifi-arc-two"></span>
+        <span class="wifi-dot"></span>
+      </span>
+      <span class="brand-name">Wi<span>Zone</span></span>
+      <span class="admin-tag">Admin</span>
+    </a>
+
+    <button
+      type="button"
+      class="mobile-menu-button"
+      aria-label="Open navigation menu"
+      [attr.aria-expanded]="menuOpen"
+      [class.menu-active]="menuOpen"
+      (click)="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <section class="navbar-content" [class.navbar-open]="menuOpen">
+      <ul class="nav-links">
+        <li>
+          <a routerLink="/admin/dashboard" routerLinkActive="active" (click)="closeMenu()">
+            <span class="nav-icon dashboard-icon" aria-hidden="true">
+              <span></span><span></span><span></span><span></span>
+            </span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+
+        <li class="dropdown-wrapper">
+          <button
+            type="button"
+            class="dropdown-button"
+            aria-haspopup="true"
+            [attr.aria-expanded]="schemeMenuOpen"
+            [class.dropdown-active]="schemeMenuOpen"
+            (click)="toggleSchemeMenu()">
+            <span class="nav-icon scheme-icon" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </span>
+            <span>WiFi Schemes</span>
+            <span class="dropdown-arrow" [class.arrow-up]="schemeMenuOpen" aria-hidden="true">▾</span>
+          </button>
+
+          <ul class="dropdown-menu" [class.dropdown-open]="schemeMenuOpen">
+            <li>
+              <a routerLink="/admin/add-scheme" routerLinkActive="dropdown-link-active" (click)="closeMenu()">
+                <span class="dropdown-item-icon add-icon" aria-hidden="true">+</span>
+                <span>
+                  <strong>Add Scheme</strong>
+                  <small>Create a new WiFi plan</small>
+                </span>
+              </a>
+            </li>
+
+            <li>
+              <a routerLink="/admin/view-schemes" routerLinkActive="dropdown-link-active" (click)="closeMenu()">
+                <span class="dropdown-item-icon view-icon" aria-hidden="true">
+                  <span></span><span></span><span></span>
+                </span>
+                <span>
+                  <strong>View Schemes</strong>
+                  <small>Manage existing WiFi plans</small>
+                </span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <a routerLink="/admin/requests" routerLinkActive="active" (click)="closeMenu()">
+            <span class="nav-icon request-icon" aria-hidden="true"><span>✓</span></span>
+            <span>Requests</span>
+          </a>
+        </li>
+
+        <li>
+          <a routerLink="/admin/feedbacks" routerLinkActive="active" (click)="closeMenu()">
+            <span class="nav-icon feedback-icon" aria-hidden="true"><span></span></span>
+            <span>Feedbacks</span>
+          </a>
+        </li>
+      </ul>
+
+      <aside class="profile-section" aria-label="Admin profile">
+        <figure class="user-information">
+          <span class="avatar" aria-hidden="true">{{ getInitial() }}</span>
+          <figcaption class="user-details">
+            <strong>{{ username }}</strong>
+            <span>Administrator</span>
+          </figcaption>
+        </figure>
+
+        <button type="button" class="logout-button" (click)="openLogoutModal()">
+          <span class="logout-icon" aria-hidden="true">→</span>
+          <span>Logout</span>
+        </button>
+      </aside>
+    </section>
+
+  </nav>
+</header>
+
+<div class="modal-overlay" *ngIf="showLogoutModal">
+  <article class="logout-modal">
+    <span class="modal-icon" aria-hidden="true">
+      <span class="modal-door"></span>
+      <span class="modal-arrow">→</span>
+    </span>
+
+    <header>
+      <h2 id="adminLogoutTitle">Logout from WiZone?</h2>
+    </header>
+
+    <p>
+      Your Admin session will be closed. You will need to log in again
+      to access the Admin portal.
+    </p>
+
+    <footer class="modal-actions">
+      <button
+        type="button"
+        class="cancel-button"
+        (click)="closeLogoutModal()">
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        class="confirm-button"
+        (click)="logout()">
+        Yes, Logout
+      </button>
+    </footer>
+  </article>
+</div>
